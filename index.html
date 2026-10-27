@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Panacea</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500&display=swap">
+<style>
+/* Layout: one quiet hero screen; a small menu mark fixed on the right edge opens a side panel with four views (services, approach, careers, contact), each shown on its own. */
+:root{
+  --bg:#f4f4f1;
+  --fg:#161816;
+  --muted:#5f655f;
+  --faint:#80857f;
+  --line:rgba(22,24,22,.12);
+  --panel:#ecece8;
+  --scrim:rgba(22,24,22,.18);
+  --font:"Manrope","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#131614;--fg:#e9e6df;--muted:#a3a59e;--faint:#858983;--line:rgba(233,230,223,.12);--panel:#1a1d1b;--scrim:rgba(0,0,0,.45);color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#131614;--fg:#e9e6df;--muted:#a3a59e;--faint:#858983;--line:rgba(233,230,223,.12);--panel:#1a1d1b;--scrim:rgba(0,0,0,.45);color-scheme:dark}
+
+*{box-sizing:border-box}
+body{margin:0}
+img,video{max-width:100%}
+[hidden]{display:none!important}
+html,body{height:100%}
+body{background:var(--bg);color:var(--fg);font-family:var(--font);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+a:hover{color:var(--muted)}
+a:focus-visible,button:focus-visible{outline:1px solid var(--fg);outline-offset:4px}
+p{margin:0}
+ul,ol{list-style:none;margin:0;padding:0}
+h1,h2,h3{margin:0;font-weight:400}
+
+.gutter{padding-left:max(28px, env(safe-area-inset-left,0px));padding-right:max(76px, calc(env(safe-area-inset-right,0px) + 64px))}
+
+/* menu mark */
+.menu-btn{position:fixed;top:50%;right:calc(env(safe-area-inset-right,0px) + 12px);transform:translateY(-50%);z-index:30;
+  width:44px;height:44px;border:0;background:transparent;color:var(--fg);cursor:pointer;display:grid;place-items:center}
+.menu-btn span{display:block;width:18px;height:1px;background:currentColor;box-shadow:0 6px 0 currentColor}
+.menu-btn:hover{color:var(--muted)}
+
+/* hero: full-bleed looping film, text always light over a soft scrim */
+.hero{position:relative;isolation:isolate;overflow:hidden;min-height:100%;display:flex;flex-direction:column;justify-content:space-between;padding-block:32px 40px;color:#f3f1ec;background:#1d211f}
+.hero .film{position:absolute;inset:0;z-index:-2;width:100%;height:100%;max-width:none;object-fit:cover}
+.hero::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:linear-gradient(180deg,rgba(14,16,15,.35) 0%,rgba(14,16,15,0) 22%,rgba(14,16,15,0) 50%,rgba(14,16,15,.55) 100%)}
+.hero a:hover{color:rgba(243,241,236,.7)}
+.hero .meta{color:rgba(243,241,236,.72)!important}
+.hero a:focus-visible{outline-color:#f3f1ec}
+body.on-hero:not(.open) .menu-btn{color:#f3f1ec}
+body.on-hero{overflow:hidden;overscroll-behavior:none}
+.slides{display:grid}
+.slide{grid-area:1/1;display:grid;gap:18px;align-content:end;opacity:0;transform:translateY(10px);visibility:hidden;
+  transition:opacity .7s ease,transform .7s ease,visibility 0s linear .7s}
+.slide.is-on{opacity:1;transform:none;visibility:visible;transition:opacity .7s ease .15s,transform .7s ease .15s,visibility 0s}
+.slide .h{font-size:clamp(24px,3vw,34px);line-height:1.3;letter-spacing:-.01em;max-width:26ch;text-wrap:balance;font-weight:400;margin:0}
+.slide .go{font-size:14px;color:rgba(243,241,236,.8);justify-self:start;border-bottom:1px solid rgba(243,241,236,.4);padding-bottom:2px}
+.slide .go:hover{color:#f3f1ec;border-color:#f3f1ec}
+.hero .row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px 32px}
+.steps{display:flex;gap:4px}
+.steps button{width:28px;height:28px;padding:0;border:0;background:transparent;cursor:pointer;display:grid;place-items:center}
+.steps button span{display:block;width:18px;height:1px;background:rgba(243,241,236,.4);transition:background .3s ease}
+.steps button[aria-current="true"] span{background:#f3f1ec}
+.steps button:focus-visible{outline:1px solid #f3f1ec;outline-offset:2px}
+@media (prefers-reduced-motion:reduce){.slide,.slide.is-on{transition:none;transform:none}}
+.name{font-weight:500;font-size:15px;letter-spacing:.01em;align-self:flex-start}
+.hero h1{font-size:clamp(24px,3vw,34px);line-height:1.3;letter-spacing:-.01em;max-width:26ch;text-wrap:balance}
+.hero .base{display:grid;gap:28px}
+.hero .meta{display:flex;flex-wrap:wrap;gap:6px 32px;font-size:13px;color:var(--faint)}
+
+/* inner views */
+.view{min-height:100%;padding-block:32px 48px;display:flex;flex-direction:column;gap:12vh}
+.view .top{display:flex;justify-content:space-between;align-items:baseline;gap:16px}
+.view .label{font-size:13px;color:var(--faint);letter-spacing:.02em}
+.view .content{display:grid;gap:56px;max-width:880px;min-width:0}
+.lead{font-size:clamp(20px,2.2vw,26px);line-height:1.4;max-width:34ch;text-wrap:balance}
+.note{color:var(--muted);max-width:58ch}
+.block{display:grid;gap:20px;border-top:1px solid var(--line);padding-top:20px}
+.block > .label{margin-bottom:4px}
+
+.divs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:40px 48px}
+.divs h2,.list h3{margin-bottom:6px;font-size:16px;font-weight:500}
+.divs p{color:var(--muted);margin-bottom:12px}
+.divs ul{color:var(--muted);font-size:15px;display:grid;gap:2px}
+
+.list{display:grid;gap:20px}
+.list li{display:grid;grid-template-columns:3em minmax(0,1fr);gap:12px}
+.list .n{color:var(--faint);font-variant-numeric:tabular-nums;font-size:14px;padding-top:1px}
+.list p{color:var(--muted)}
+.plain li{grid-template-columns:minmax(0,1fr)}
+
+.tbl{overflow-x:auto}
+.fit{width:100%;border-collapse:collapse;font-size:15px}
+.fit th{text-align:left;font-weight:400;font-size:13px;color:var(--faint);padding:0 16px 10px 0}
+.fit td{border-top:1px solid var(--line);padding:12px 16px 12px 0;vertical-align:top}
+.fit td:last-child{color:var(--muted)}
+
+dl{margin:0;display:grid;grid-template-columns:7em minmax(0,1fr);gap:8px 16px}
+dt{color:var(--faint);font-size:14px}
+dd{margin:0;word-break:break-word}
+.legal{font-size:13px;color:var(--faint);max-width:80ch}
+
+/* panel */
+.scrim{position:fixed;inset:0;z-index:40;background:var(--scrim);opacity:0;pointer-events:none;transition:opacity .3s ease}
+.panel{position:fixed;top:0;right:0;bottom:0;z-index:50;width:min(340px,86vw);background:var(--panel);
+  padding:32px calc(env(safe-area-inset-right,0px) + 32px) 40px 36px;display:flex;flex-direction:column;justify-content:space-between;
+  transform:translateX(100%);transition:transform .4s cubic-bezier(.6,0,.2,1);visibility:hidden}
+body.open .scrim{opacity:1;pointer-events:auto}
+body.open .panel{transform:none;visibility:visible}
+.panel .close{align-self:flex-end;width:44px;height:44px;margin:-10px -10px 0 0;border:0;background:transparent;color:var(--fg);cursor:pointer;display:grid;place-items:center}
+.panel nav ul{display:grid;gap:10px;font-size:22px}
+.panel nav a[aria-current="page"]{color:var(--faint)}
+.panel .foot{font-size:13px;color:var(--faint);display:grid;gap:4px}
+
+@media (max-width:720px){
+  .divs{grid-template-columns:1fr}
+  .view{gap:8vh}
+  .gutter{padding-right:max(64px, calc(env(safe-area-inset-right,0px) + 56px))}
+}
+@media (prefers-reduced-motion:reduce){.scrim,.panel{transition:none}}
+</style>
+</head>
+<body>
+
+<button class="menu-btn" id="menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="panel"><span></span></button>
+
+<div class="scrim" id="scrim"></div>
+<aside class="panel" id="panel" aria-label="Menu">
+  <button class="close" id="close-btn" type="button" aria-label="Close menu">
+    <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M1 1l12 12M13 1L1 13" stroke="currentColor" stroke-width="1.2"/></svg>
+  </button>
+  <nav aria-label="Main">
+    <ul>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#approach">Approach</a></li>
+      <li><a href="#careers">Careers</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+  <div class="foot">
+    <span>contact@panaceainternational.com</span>
+    <span>United States</span>
+  </div>
+</aside>
+
+<main id="home" class="hero gutter" data-view>
+  <video class="film" id="film" src="hero.mp4" poster="hero-poster.jpg" autoplay muted loop playsinline preload="auto" aria-hidden="true"></video>
+  <a class="name" href="#">Panacea</a>
+  <div class="base">
+    <div class="slides" id="slides" aria-live="polite">
+      <div class="slide is-on"><h1 class="h">One company for the operational, commercial and capital work of growing technology companies.</h1></div>
+      <div class="slide"><p class="h">Ten disciplines in four divisions. Take one service or all of them.</p><a class="go" href="#services">Check out services</a></div>
+      <div class="slide"><p class="h">Four stages, in writing. You can stop after any of them.</p><a class="go" href="#approach">Check out approach</a></div>
+    </div>
+    <div class="row">
+      <div class="meta"><span>United States</span><span>Since 2021</span></div>
+      <div class="steps" id="steps" aria-label="Statements">
+        <button type="button" aria-label="Statement 1" aria-current="true"><span></span></button>
+        <button type="button" aria-label="Statement 2"><span></span></button>
+        <button type="button" aria-label="Statement 3"><span></span></button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<main id="services" class="view gutter" data-view hidden>
+  <div class="top"><a class="name" href="#">Panacea</a><span class="label">Services</span></div>
+  <div class="content">
+    <p class="lead">Ten disciplines in four divisions. Take one service or all of them.</p>
+    <div class="divs">
+      <div>
+        <h2>Consulting &amp; Capital</h2>
+        <p>We advise technology and AI companies and invest in them. When we do both, we disclose it.</p>
+        <ul><li>Commercial strategy</li><li>Fundraising readiness</li><li>Private investment</li><li>Growth capital</li><li>Post-investment support</li></ul>
+      </div>
+      <div>
+        <h2>Corporate Services</h2>
+        <p>Immigration, accounting, administration and HR. The groundwork for hiring.</p>
+        <ul><li>Work visas &amp; status</li><li>Workforce planning</li><li>Bookkeeping &amp; close</li><li>Management reporting</li><li>Entity administration</li><li>HR &amp; people</li></ul>
+      </div>
+      <div>
+        <h2>Growth &amp; Communications</h2>
+        <p>Marketing, PR and communications run as one function, so the story stays the same everywhere.</p>
+        <ul><li>Positioning &amp; messaging</li><li>Demand generation</li><li>Media &amp; announcements</li><li>Founder profile</li><li>Internal communications</li><li>Crisis &amp; issues</li></ul>
+      </div>
+      <div>
+        <h2>Technology &amp; Security</h2>
+        <p>Software and security run together, because the questions overlap.</p>
+        <ul><li>Technical advisory</li><li>Delivery &amp; engineering</li><li>AI implementation</li><li>Assessment &amp; remediation</li><li>Compliance readiness</li><li>People, premises &amp; travel</li></ul>
+      </div>
+    </div>
+  </div>
+</main>
+
+<main id="approach" class="view gutter" data-view hidden>
+  <div class="top"><a class="name" href="#">Panacea</a><span class="label">Approach</span></div>
+  <div class="content">
+    <p class="lead">Four stages, in writing. You can stop after any of them.</p>
+    <ol class="list">
+      <li><span class="n">01</span><div><h3>Diagnostic</h3><p>Free. We learn how the company runs and where it stalls.</p></div></li>
+      <li><span class="n">02</span><div><h3>Scope &amp; terms</h3><p>Scope, fee and deliverables in writing, with success measures for the first 90 days.</p></div></li>
+      <li><span class="n">03</span><div><h3>Transition</h3><p>Work moves over from current providers. Each handover is confirmed in writing.</p></div></li>
+      <li><span class="n">04</span><div><h3>Operate &amp; review</h3><p>We run the work and review it every quarter.</p></div></li>
+    </ol>
+    <div class="block">
+      <span class="label">Principles</span>
+      <ul class="list plain">
+        <li><div><h3>Only qualified hands</h3><p>Licensed work goes to licensed professionals. We disclose their credentials.</p></div></li>
+        <li><div><h3>One point of accountability</h3><p>One team owns the outcome. No handoffs between vendors.</p></div></li>
+        <li><div><h3>Conflicts disclosed</h3><p>We sometimes advise and invest in the same company. We disclose it in writing first.</p></div></li>
+        <li><div><h3>No lock-in</h3><p>Every service stands alone. Retainers end on 30 days’ notice, with handover.</p></div></li>
+      </ul>
+    </div>
+    <div class="block">
+      <span class="label">Who we work with</span>
+      <p class="note">U.S. technology and AI companies formalising their operations, especially those raising capital or consolidating six or more providers.</p>
+      <div class="tbl">
+        <table class="fit">
+          <thead><tr><th>Stage</th><th>Team</th><th>Where we help most</th></tr></thead>
+          <tbody>
+            <tr><td>Early</td><td>1–20</td><td>Putting the foundations in place across all four divisions.</td></tr>
+            <tr><td>Scaling</td><td>20–100</td><td>Formalising the functions that strain as the team grows.</td></tr>
+            <tr><td>Established</td><td>100+</td><td>Focused work where a specialist team makes the difference.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</main>
+
+<main id="careers" class="view gutter" data-view hidden>
+  <div class="top"><a class="name" href="#">Panacea</a><span class="label">Careers</span></div>
+  <div class="content">
+    <p class="lead">We hire rarely and selectively. Deep in one field, fluent in the rest.</p>
+    <ul class="list plain">
+      <li><div><h3>Deep and broad</h3><p>Expert in one discipline, fluent enough in the others to connect the work.</p></div></li>
+      <li><div><h3>Clients from week two</h3><p>Small teams and direct client work within two weeks.</p></div></li>
+      <li><div><h3>Judgment over hierarchy</h3><p>Progress depends on the quality of your decisions.</p></div></li>
+    </ul>
+    <div class="block">
+      <span class="label">Open roles</span>
+      <p class="note">None at present. Send a resume and a short note to contact@panaceainternational.com and we will keep it on file.</p>
+    </div>
+  </div>
+</main>
+
+<main id="contact" class="view gutter" data-view hidden>
+  <div class="top"><a class="name" href="#">Panacea</a><span class="label">Contact</span></div>
+  <div class="content">
+    <p class="lead">Tell us what you are building. The first conversation is free, and if we are not the right fit, we say so.</p>
+    <dl>
+      <dt>Email</dt><dd><a href="mailto:contact@panaceainternational.com">contact@panaceainternational.com</a></dd>
+      <dt>Location</dt><dd>United States</dd>
+      <dt>Response</dt><dd>Within two working days</dd>
+    </dl>
+    <p class="legal">Panacea provides business advisory, corporate services, communications, technology and capital-related services. Nothing on this site is legal, immigration, tax, accounting, audit or investment advice, nor an offer to buy or sell any security. Services requiring a professional license are delivered only by licensed individuals or partner firms under separate written terms. No client relationship exists until an engagement letter is signed. © 2026 Panacea.</p>
+  </div>
+</main>
+
+<script>
+(function(){
+  var body=document.body, btn=document.getElementById('menu-btn'), panel=document.getElementById('panel');
+  var views=[].slice.call(document.querySelectorAll('[data-view]'));
+  var links=[].slice.call(panel.querySelectorAll('nav a'));
+  function setOpen(o){
+    body.classList.toggle('open',o);
+    btn.setAttribute('aria-expanded',o?'true':'false');
+    if(o){ (links[0]||panel).focus(); } else if(panel.contains(document.activeElement)){ btn.focus(); }
+  }
+  function route(){
+    var id=(location.hash||'').slice(1);
+    if(!document.getElementById(id)||!document.getElementById(id).hasAttribute('data-view')) id='home';
+    views.forEach(function(v){ v.hidden = v.id!==id; });
+    body.classList.toggle('on-hero', id==='home');
+    var film=document.getElementById('film');
+    if(film){
+      var still=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if(id==='home'&&!still){ var p=film.play(); if(p&&p.catch) p.catch(function(){}); } else { film.pause(); }
+    }
+    links.forEach(function(a){ if(a.getAttribute('href')==='#'+id) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current'); });
+    window.scrollTo(0,0);
+    setOpen(false);
+  }
+  btn.addEventListener('click',function(){ setOpen(!body.classList.contains('open')); });
+  document.getElementById('close-btn').addEventListener('click',function(){ setOpen(false); });
+  document.getElementById('scrim').addEventListener('click',function(){ setOpen(false); });
+  panel.addEventListener('keydown',function(e){ if(e.key==='Escape') setOpen(false); });
+  [].slice.call(document.querySelectorAll('a.name')).forEach(function(a){
+    a.addEventListener('click',function(e){ e.preventDefault(); history.replaceState(null,'',location.pathname+location.search); route(); });
+  });
+  window.addEventListener('hashchange',route);
+
+  /* hero: scrolling steps through statements instead of moving the page */
+  var slides=[].slice.call(document.querySelectorAll('#slides .slide'));
+  var dots=[].slice.call(document.querySelectorAll('#steps button'));
+  var cur=0, lockUntil=0, acc=0;
+  function show(i){
+    i=Math.max(0,Math.min(slides.length-1,i));
+    if(i===cur) return false;
+    cur=i;
+    slides.forEach(function(s,k){ s.classList.toggle('is-on',k===i); s.setAttribute('aria-hidden',k===i?'false':'true'); });
+    dots.forEach(function(d,k){ d.setAttribute('aria-current',k===i?'true':'false'); });
+    return true;
+  }
+  function step(dir){
+    var now=Date.now();
+    if(now<lockUntil) return;
+    if(show(cur+dir)) lockUntil=now+1000;
+  }
+  function active(){ return body.classList.contains('on-hero')&&!body.classList.contains('open'); }
+  slides.forEach(function(s,k){ if(k) s.setAttribute('aria-hidden','true'); });
+  dots.forEach(function(d,k){ d.addEventListener('click',function(){ show(k); }); });
+  window.addEventListener('wheel',function(e){
+    if(!active()) return;
+    e.preventDefault();
+    if(Date.now()<lockUntil){ acc=0; return; }
+    acc+=e.deltaY;
+    if(Math.abs(acc)>=40){ step(acc>0?1:-1); acc=0; }
+  },{passive:false});
+  var ty=null;
+  window.addEventListener('touchstart',function(e){ if(active()) ty=e.touches[0].clientY; },{passive:true});
+  window.addEventListener('touchmove',function(e){ if(active()) e.preventDefault(); },{passive:false});
+  window.addEventListener('touchend',function(e){
+    if(!active()||ty===null) return;
+    var dy=ty-e.changedTouches[0].clientY; ty=null;
+    if(Math.abs(dy)>40) step(dy>0?1:-1);
+  },{passive:true});
+  document.addEventListener('keydown',function(e){
+    if(!active()) return;
+    var t=e.target&&e.target.tagName;
+    if(t==='INPUT'||t==='TEXTAREA') return;
+    if(e.key==='ArrowDown'||e.key==='PageDown'||(e.key===' '&&t!=='BUTTON'&&t!=='A')){ e.preventDefault(); step(1); }
+    else if(e.key==='ArrowUp'||e.key==='PageUp'){ e.preventDefault(); step(-1); }
+  });
+  route();
+})();
+</script>
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Panacea</title>
+<title>Panacea Technologies</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500&display=swap">
@@ -39,7 +39,7 @@ h1,h2,h3{margin:0;font-weight:400}
 .gutter{padding-left:max(28px, env(safe-area-inset-left,0px));padding-right:max(76px, calc(env(safe-area-inset-right,0px) + 64px))}
 
 /* menu mark */
-.menu-btn{position:fixed;top:50%;right:calc(env(safe-area-inset-right,0px) + 12px);transform:translateY(-50%);z-index:30;
+.menu-btn{position:fixed;top:calc(env(safe-area-inset-top,0px) + 20px);right:calc(env(safe-area-inset-right,0px) + 16px);z-index:30;
   width:44px;height:44px;border:0;background:transparent;color:var(--fg);cursor:pointer;display:grid;place-items:center}
 .menu-btn span{display:block;width:18px;height:1px;background:currentColor;box-shadow:0 6px 0 currentColor}
 .menu-btn:hover{color:var(--muted)}
@@ -58,7 +58,7 @@ body.on-hero{overflow:hidden;overscroll-behavior:none}
 .slide{grid-area:1/1;display:grid;gap:18px;align-content:end;opacity:0;transform:translateY(10px);visibility:hidden;
   transition:opacity .7s ease,transform .7s ease,visibility 0s linear .7s}
 .slide.is-on{opacity:1;transform:none;visibility:visible;transition:opacity .7s ease .15s,transform .7s ease .15s,visibility 0s}
-.slide .h{font-size:clamp(24px,3vw,34px);line-height:1.3;letter-spacing:-.01em;max-width:26ch;text-wrap:balance;font-weight:400;margin:0}
+.slide .h{font-size:clamp(22px,2.6vw,32px);line-height:1.32;letter-spacing:-.01em;max-width:34ch;text-wrap:balance;font-weight:400;margin:0}
 .slide .go{font-size:14px;color:rgba(243,241,236,.8);justify-self:start;border-bottom:1px solid rgba(243,241,236,.4);padding-bottom:2px}
 .slide .go:hover{color:#f3f1ec;border-color:#f3f1ec}
 .hero .row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px 32px}
@@ -68,7 +68,7 @@ body.on-hero{overflow:hidden;overscroll-behavior:none}
 .steps button[aria-current="true"] span{background:#f3f1ec}
 .steps button:focus-visible{outline:1px solid #f3f1ec;outline-offset:2px}
 @media (prefers-reduced-motion:reduce){.slide,.slide.is-on{transition:none;transform:none}}
-.name{font-weight:500;font-size:15px;letter-spacing:.01em;align-self:flex-start}
+.name{font-weight:500;font-size:19px;letter-spacing:.01em;align-self:flex-start}
 .hero h1{font-size:clamp(24px,3vw,34px);line-height:1.3;letter-spacing:-.01em;max-width:26ch;text-wrap:balance}
 .hero .base{display:grid;gap:28px}
 .hero .meta{display:flex;flex-wrap:wrap;gap:6px 32px;font-size:13px;color:var(--faint)}
@@ -144,21 +144,21 @@ body.open .panel{transform:none;visibility:visible}
   </nav>
   <div class="foot">
     <span>contact@panaceainternational.com</span>
-    <span>United States</span>
+    <span>California · Texas · New York · Massachusetts</span>
   </div>
 </aside>
 
 <main id="home" class="hero gutter" data-view>
   <video class="film" id="film" src="hero.mp4" poster="hero-poster.jpg" autoplay muted loop playsinline preload="auto" aria-hidden="true"></video>
-  <a class="name" href="#">Panacea</a>
+  <a class="name" href="#">Panacea Technologies</a>
   <div class="base">
     <div class="slides" id="slides" aria-live="polite">
-      <div class="slide is-on"><h1 class="h">One company for the operational, commercial and capital work of growing technology companies.</h1></div>
-      <div class="slide"><p class="h">Ten disciplines in four divisions. Take one service or all of them.</p><a class="go" href="#services">Check out services</a></div>
-      <div class="slide"><p class="h">Four stages, in writing. You can stop after any of them.</p><a class="go" href="#approach">Check out approach</a></div>
+      <div class="slide is-on"><h1 class="h">We partner with growing technology companies and their executives to provide operational, commercial, legal, IT and back office services using artificial intelligence.</h1></div>
+      <div class="slide"><p class="h">We provide a highly catered and custom approach to our partnerships. We deploy AI systems to automate the service needs of select individuals, in a crafted and bespoke manner catered to their needs.</p><a class="go" href="#services">Review our list of services here</a></div>
+      <div class="slide"><p class="h">For clients looking to begin a relationship, please contact us directly.</p><a class="go" href="#contact">Contact us</a></div>
     </div>
     <div class="row">
-      <div class="meta"><span>United States</span><span>Since 2021</span></div>
+      <div class="meta"><span>California · Texas · New York · Massachusetts</span><span>Since 2021</span></div>
       <div class="steps" id="steps" aria-label="Statements">
         <button type="button" aria-label="Statement 1" aria-current="true"><span></span></button>
         <button type="button" aria-label="Statement 2"><span></span></button>
@@ -169,7 +169,7 @@ body.open .panel{transform:none;visibility:visible}
 </main>
 
 <main id="services" class="view gutter" data-view hidden>
-  <div class="top"><a class="name" href="#">Panacea</a><span class="label">Services</span></div>
+  <div class="top"><a class="name" href="#">Panacea Technologies</a><span class="label">Services</span></div>
   <div class="content">
     <p class="lead">Ten disciplines in four divisions. Take one service or all of them.</p>
     <div class="divs">
@@ -198,7 +198,7 @@ body.open .panel{transform:none;visibility:visible}
 </main>
 
 <main id="approach" class="view gutter" data-view hidden>
-  <div class="top"><a class="name" href="#">Panacea</a><span class="label">Approach</span></div>
+  <div class="top"><a class="name" href="#">Panacea Technologies</a><span class="label">Approach</span></div>
   <div class="content">
     <p class="lead">Four stages, in writing. You can stop after any of them.</p>
     <ol class="list">
@@ -234,7 +234,7 @@ body.open .panel{transform:none;visibility:visible}
 </main>
 
 <main id="careers" class="view gutter" data-view hidden>
-  <div class="top"><a class="name" href="#">Panacea</a><span class="label">Careers</span></div>
+  <div class="top"><a class="name" href="#">Panacea Technologies</a><span class="label">Careers</span></div>
   <div class="content">
     <p class="lead">We hire rarely and selectively. Deep in one field, fluent in the rest.</p>
     <ul class="list plain">
@@ -250,12 +250,12 @@ body.open .panel{transform:none;visibility:visible}
 </main>
 
 <main id="contact" class="view gutter" data-view hidden>
-  <div class="top"><a class="name" href="#">Panacea</a><span class="label">Contact</span></div>
+  <div class="top"><a class="name" href="#">Panacea Technologies</a><span class="label">Contact</span></div>
   <div class="content">
     <p class="lead">Tell us what you are building. The first conversation is free, and if we are not the right fit, we say so.</p>
     <dl>
       <dt>Email</dt><dd><a href="mailto:contact@panaceainternational.com">contact@panaceainternational.com</a></dd>
-      <dt>Location</dt><dd>United States</dd>
+      <dt>Locations</dt><dd>California, Texas, New York, Massachusetts</dd>
       <dt>Response</dt><dd>Within two working days</dd>
     </dl>
     <p class="legal">Panacea provides business advisory, corporate services, communications, technology and capital-related services. Nothing on this site is legal, immigration, tax, accounting, audit or investment advice, nor an offer to buy or sell any security. Services requiring a professional license are delivered only by licensed individuals or partner firms under separate written terms. No client relationship exists until an engagement letter is signed. © 2026 Panacea.</p>

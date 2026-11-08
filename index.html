@@ -4,11 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Panacea Technologies</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23131614'/%3E%3Cpath d='M11 24V8h6.5a5 5 0 0 1 0 10H11' fill='none' stroke='%23e9e6df' stroke-width='2'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500&display=swap">
 <style>
-/* Layout: one quiet hero screen; a small menu mark fixed on the right edge opens a side panel with four views (services, approach, careers, contact), each shown on its own. */
+/* Layout: one quiet hero screen; a small menu mark fixed on the right edge opens a side panel with views (services, careers, contact, legal), each shown on its own. */
 :root{
   --bg:#f4f4f1;
   --fg:#161816;
@@ -41,7 +42,7 @@ h1,h2,h3{margin:0;font-weight:400}
 /* menu mark */
 .menu-btn{position:fixed;top:calc(env(safe-area-inset-top,0px) + 20px);right:calc(env(safe-area-inset-right,0px) + 16px);z-index:30;
   width:44px;height:44px;border:0;background:transparent;color:var(--fg);cursor:pointer;display:grid;place-items:center}
-.menu-btn span{display:block;width:18px;height:1px;background:currentColor;box-shadow:0 6px 0 currentColor}
+.menu-btn span{display:block;width:18px;height:1px;background:currentColor;box-shadow:0 -6px 0 currentColor,0 6px 0 currentColor}
 .menu-btn:hover{color:var(--muted)}
 
 /* hero: full-bleed looping film, text always light over a soft scrim */
@@ -104,6 +105,23 @@ dl{margin:0;display:grid;grid-template-columns:7em minmax(0,1fr);gap:8px 16px}
 dt{color:var(--faint);font-size:14px}
 dd{margin:0;word-break:break-word}
 .legal{font-size:13px;color:var(--faint);max-width:80ch}
+.groups{display:grid;gap:0}
+.group{display:grid;grid-template-columns:3em minmax(0,1fr) minmax(0,1.2fr);gap:12px 24px;border-top:1px solid var(--line);padding-block:20px}
+.group .n{color:var(--faint);font-variant-numeric:tabular-nums;font-size:14px;padding-top:2px}
+.group h2{font-size:16px;font-weight:500;margin-bottom:4px}
+.group p{color:var(--muted);font-size:15px}
+.group ul{color:var(--muted);font-size:15px;display:grid;gap:2px}
+.jobs{display:grid}
+.job{display:grid;gap:10px;border-top:1px solid var(--line);padding-block:24px}
+.job h2{font-size:18px;font-weight:500}
+.job .where{font-size:13px;color:var(--faint)}
+.job p{color:var(--muted);max-width:62ch}
+.job ul{color:var(--muted);font-size:15px;display:grid;gap:2px;padding-left:1.1em;list-style:disc}
+.doc{display:grid;gap:28px;max-width:66ch}
+.doc section{display:grid;gap:10px;border-top:1px solid var(--line);padding-top:20px}
+.doc h2{font-size:16px;font-weight:500}
+.doc h3{font-size:15px;font-weight:500;margin-top:6px}
+.doc p{color:var(--muted);font-size:15px}
 
 /* panel */
 .scrim{position:fixed;inset:0;z-index:40;background:var(--scrim);opacity:0;pointer-events:none;transition:opacity .3s ease}
@@ -116,9 +134,14 @@ body.open .panel{transform:none;visibility:visible}
 .panel nav ul{display:grid;gap:10px;font-size:22px}
 .panel nav a[aria-current="page"]{color:var(--faint)}
 .panel .foot{font-size:13px;color:var(--faint);display:grid;gap:4px}
+.panel .foot a{color:var(--muted)}
+.panel .foot .legal-link{margin-top:14px;font-size:12px;color:var(--faint);text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--line);justify-self:start}
+.panel .foot a:hover,.panel .foot a[aria-current="page"]{color:var(--fg)}
 
 @media (max-width:720px){
   .divs{grid-template-columns:1fr}
+  .group{grid-template-columns:2.5em minmax(0,1fr)}
+  .group ul{grid-column:2}
   .view{gap:8vh}
   .gutter{padding-right:max(64px, calc(env(safe-area-inset-right,0px) + 56px))}
 }
@@ -137,14 +160,14 @@ body.open .panel{transform:none;visibility:visible}
   <nav aria-label="Main">
     <ul>
       <li><a href="#services">Services</a></li>
-      <li><a href="#approach">Approach</a></li>
       <li><a href="#careers">Careers</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
   </nav>
   <div class="foot">
     <span>contact@panaceainternational.com</span>
-    <span>California · Texas · New York · Massachusetts</span>
+    <span>California · New York · Texas · Massachusetts</span>
+    <a class="legal-link" href="#legal">Legal &amp; Disclaimer</a>
   </div>
 </aside>
 
@@ -154,11 +177,11 @@ body.open .panel{transform:none;visibility:visible}
   <div class="base">
     <div class="slides" id="slides" aria-live="polite">
       <div class="slide is-on"><h1 class="h">We partner with growing technology companies and their executives to provide operational, commercial, legal, IT and back office services using artificial intelligence.</h1></div>
-      <div class="slide"><p class="h">We provide a highly catered and custom approach to our partnerships. We deploy AI systems to automate the service needs of select individuals, in a crafted and bespoke manner catered to their needs.</p><a class="go" href="#services">Review our list of services here</a></div>
+      <div class="slide"><p class="h">We provide a highly custom approach to our partnerships, tailored to the unique needs of our clients. Our AI systems automate the service needs of individuals and enterprises in a bespoke manner.</p><a class="go" href="#services">Review our list of services here</a></div>
       <div class="slide"><p class="h">For clients looking to begin a relationship, please contact us directly.</p><a class="go" href="#contact">Contact us</a></div>
     </div>
     <div class="row">
-      <div class="meta"><span>California · Texas · New York · Massachusetts</span><span>Since 2021</span></div>
+      <div class="meta"><span>California · New York · Texas · Massachusetts</span><span>Since 2021</span></div>
       <div class="steps" id="steps" aria-label="Statements">
         <button type="button" aria-label="Statement 1" aria-current="true"><span></span></button>
         <button type="button" aria-label="Statement 2"><span></span></button>
@@ -171,63 +194,27 @@ body.open .panel{transform:none;visibility:visible}
 <main id="services" class="view gutter" data-view hidden>
   <div class="top"><a class="name" href="#">Panacea Technologies</a><span class="label">Services</span></div>
   <div class="content">
-    <p class="lead">Ten disciplines in four divisions. Take one service or all of them.</p>
-    <div class="divs">
-      <div>
-        <h2>Consulting &amp; Capital</h2>
-        <p>We advise technology and AI companies and invest in them. When we do both, we disclose it.</p>
+    <h1 class="lead">Ten disciplines across four divisions.</h1>
+    <div class="groups">
+      <div class="group">
+        <span class="n">01</span>
+        <div><h2>Consulting &amp; Capital</h2><p>Strategy and capital.</p></div>
         <ul><li>Commercial strategy</li><li>Fundraising readiness</li><li>Private investment</li><li>Growth capital</li><li>Post-investment support</li></ul>
       </div>
-      <div>
-        <h2>Corporate Services</h2>
-        <p>Immigration, accounting, administration and HR. The groundwork for hiring.</p>
+      <div class="group">
+        <span class="n">02</span>
+        <div><h2>Corporate Services</h2><p>Immigration, accounting, administration and HR.</p></div>
         <ul><li>Work visas &amp; status</li><li>Workforce planning</li><li>Bookkeeping &amp; close</li><li>Management reporting</li><li>Entity administration</li><li>HR &amp; people</li></ul>
       </div>
-      <div>
-        <h2>Growth &amp; Communications</h2>
-        <p>Marketing, PR and communications run as one function, so the story stays the same everywhere.</p>
+      <div class="group">
+        <span class="n">03</span>
+        <div><h2>Growth &amp; Communications</h2><p>Marketing, PR and communications.</p></div>
         <ul><li>Positioning &amp; messaging</li><li>Demand generation</li><li>Media &amp; announcements</li><li>Founder profile</li><li>Internal communications</li><li>Crisis &amp; issues</li></ul>
       </div>
-      <div>
-        <h2>Technology &amp; Security</h2>
-        <p>Software and security run together, because the questions overlap.</p>
+      <div class="group">
+        <span class="n">04</span>
+        <div><h2>Technology &amp; Security</h2><p>Software and AI, cyber security and corporate security.</p></div>
         <ul><li>Technical advisory</li><li>Delivery &amp; engineering</li><li>AI implementation</li><li>Assessment &amp; remediation</li><li>Compliance readiness</li><li>People, premises &amp; travel</li></ul>
-      </div>
-    </div>
-  </div>
-</main>
-
-<main id="approach" class="view gutter" data-view hidden>
-  <div class="top"><a class="name" href="#">Panacea Technologies</a><span class="label">Approach</span></div>
-  <div class="content">
-    <p class="lead">Four stages, in writing. You can stop after any of them.</p>
-    <ol class="list">
-      <li><span class="n">01</span><div><h3>Diagnostic</h3><p>Free. We learn how the company runs and where it stalls.</p></div></li>
-      <li><span class="n">02</span><div><h3>Scope &amp; terms</h3><p>Scope, fee and deliverables in writing, with success measures for the first 90 days.</p></div></li>
-      <li><span class="n">03</span><div><h3>Transition</h3><p>Work moves over from current providers. Each handover is confirmed in writing.</p></div></li>
-      <li><span class="n">04</span><div><h3>Operate &amp; review</h3><p>We run the work and review it every quarter.</p></div></li>
-    </ol>
-    <div class="block">
-      <span class="label">Principles</span>
-      <ul class="list plain">
-        <li><div><h3>Only qualified hands</h3><p>Licensed work goes to licensed professionals. We disclose their credentials.</p></div></li>
-        <li><div><h3>One point of accountability</h3><p>One team owns the outcome. No handoffs between vendors.</p></div></li>
-        <li><div><h3>Conflicts disclosed</h3><p>We sometimes advise and invest in the same company. We disclose it in writing first.</p></div></li>
-        <li><div><h3>No lock-in</h3><p>Every service stands alone. Retainers end on 30 days’ notice, with handover.</p></div></li>
-      </ul>
-    </div>
-    <div class="block">
-      <span class="label">Who we work with</span>
-      <p class="note">U.S. technology and AI companies formalising their operations, especially those raising capital or consolidating six or more providers.</p>
-      <div class="tbl">
-        <table class="fit">
-          <thead><tr><th>Stage</th><th>Team</th><th>Where we help most</th></tr></thead>
-          <tbody>
-            <tr><td>Early</td><td>1–20</td><td>Putting the foundations in place across all four divisions.</td></tr>
-            <tr><td>Scaling</td><td>20–100</td><td>Formalising the functions that strain as the team grows.</td></tr>
-            <tr><td>Established</td><td>100+</td><td>Focused work where a specialist team makes the difference.</td></tr>
-          </tbody>
-        </table>
       </div>
     </div>
   </div>
@@ -236,29 +223,99 @@ body.open .panel{transform:none;visibility:visible}
 <main id="careers" class="view gutter" data-view hidden>
   <div class="top"><a class="name" href="#">Panacea Technologies</a><span class="label">Careers</span></div>
   <div class="content">
-    <p class="lead">We hire rarely and selectively. Deep in one field, fluent in the rest.</p>
-    <ul class="list plain">
-      <li><div><h3>Deep and broad</h3><p>Expert in one discipline, fluent enough in the others to connect the work.</p></div></li>
-      <li><div><h3>Clients from week two</h3><p>Small teams and direct client work within two weeks.</p></div></li>
-      <li><div><h3>Judgment over hierarchy</h3><p>Progress depends on the quality of your decisions.</p></div></li>
-    </ul>
-    <div class="block">
-      <span class="label">Open roles</span>
-      <p class="note">None at present. Send a resume and a short note to contact@panaceainternational.com and we will keep it on file.</p>
+    <h1 class="lead">Open roles</h1>
+    <div class="jobs">
+      <article class="job">
+        <h2>AI Engineer</h2>
+        <p>Build and maintain the AI systems that automate operational, accounting, legal and IT work for our clients, from model integration and retrieval to evaluation and production infrastructure.</p>
+        <ul><li>3+ years of software engineering experience</li><li>Strong Python or TypeScript</li><li>Experience shipping LLM-based applications to production</li></ul>
+      </article>
+      <article class="job">
+        <h2>Forward Deployed Engineer</h2>
+        <p>Work directly with client teams to scope, configure and roll out our systems inside their operations. You own each deployment from first workshop to stable handover.</p>
+        <ul><li>Engineering background with client-facing experience</li><li>Comfortable working across data, integrations and workflows</li><li>Clear written and spoken communication</li></ul>
+      </article>
+      <article class="job">
+        <h2>Client Support Associate</h2>
+        <p>Handle day-to-day client requests, onboarding and document management, and coordinate with our specialist teams so each request is resolved quickly and correctly.</p>
+        <ul><li>2+ years in client service, operations or administration</li><li>Organised, accurate and responsive</li><li>Familiarity with accounting, HR or immigration processes is a plus</li></ul>
+      </article>
+      <article class="job">
+        <h2>Operations &amp; Administration Associate</h2>
+        <p>Support the internal running of the company: bookkeeping support, vendor management, scheduling and entity administration.</p>
+        <ul><li>2+ years in operations or office administration</li><li>Working knowledge of bookkeeping tools</li><li>High attention to detail</li></ul>
+      </article>
     </div>
+    <p class="note">To apply, email your resume and the role title to contact@panaceainternational.com.</p>
   </div>
 </main>
 
 <main id="contact" class="view gutter" data-view hidden>
   <div class="top"><a class="name" href="#">Panacea Technologies</a><span class="label">Contact</span></div>
   <div class="content">
-    <p class="lead">Tell us what you are building. The first conversation is free, and if we are not the right fit, we say so.</p>
+    <h1 class="lead">Please contact our team directly.</h1>
     <dl>
-      <dt>Email</dt><dd><a href="mailto:contact@panaceainternational.com">contact@panaceainternational.com</a></dd>
-      <dt>Locations</dt><dd>California, Texas, New York, Massachusetts</dd>
+      <dt>Inquiries</dt><dd><a href="mailto:contact@panaceainternational.com">contact@panaceainternational.com</a></dd>
+      <dt>Careers</dt><dd>contact@panaceainternational.com, with the role title in the subject line</dd>
+      <dt>Offices</dt><dd>California, New York, Texas, Massachusetts</dd>
       <dt>Response</dt><dd>Within two working days</dd>
     </dl>
-    <p class="legal">Panacea provides business advisory, corporate services, communications, technology and capital-related services. Nothing on this site is legal, immigration, tax, accounting, audit or investment advice, nor an offer to buy or sell any security. Services requiring a professional license are delivered only by licensed individuals or partner firms under separate written terms. No client relationship exists until an engagement letter is signed. © 2026 Panacea.</p>
+  </div>
+</main>
+
+<main id="legal" class="view gutter" data-view hidden>
+  <div class="top"><a class="name" href="#">Panacea Technologies</a><span class="label">Legal</span></div>
+  <div class="content">
+    <h1 class="lead">Legal &amp; Disclaimer</h1>
+    <div class="doc">
+      <p>Last updated 8 November 2026</p>
+      <section>
+        <h2>About this website</h2>
+        <p>This website is operated by Panacea Technologies (“Panacea”, “we”, “us”). By using it you agree to the terms below. If you do not agree, please do not use the site.</p>
+      </section>
+      <section>
+        <h2>Information only</h2>
+        <p>The content on this site is general information about Panacea and its services. It is not professional advice and should not be relied on as such. Information may be changed or removed at any time without notice.</p>
+      </section>
+      <section>
+        <h2>No professional relationship</h2>
+        <p>Visiting this site or contacting us does not create a client, advisory, attorney-client or fiduciary relationship. A relationship begins only when both parties sign a written engagement letter setting out scope, fees and terms. Please do not send confidential information until an engagement is in place.</p>
+      </section>
+      <section>
+        <h2>Regulated services</h2>
+        <p>Panacea is not a law firm, certified public accounting firm, registered investment adviser or broker-dealer. Where a service requires a professional license, including legal, immigration, tax, audit or investment services, it is provided only by appropriately licensed professionals or independent partner firms under separate written terms.</p>
+      </section>
+      <section>
+        <h2>Not an offer of securities</h2>
+        <p>Nothing on this site is an offer to sell, or a solicitation of an offer to buy, any security or interest in any fund or investment vehicle. Any investment activity is conducted only through formal offering documents and in compliance with applicable law.</p>
+      </section>
+      <section>
+        <h2>Use of artificial intelligence</h2>
+        <p>Our services use AI systems to support and automate work. All client deliverables are reviewed by our team before they are relied on. Client data is used only to deliver the agreed services and is not used to train third-party models.</p>
+      </section>
+      <section>
+        <h2>Privacy</h2>
+        <p>We collect only the information you choose to send us, such as your name, email, company and, for job applicants, your resume. We use it to respond to you and assess applications. We do not sell personal data or use it for advertising. You may request access to, correction or deletion of your data by emailing contact@panaceainternational.com.</p>
+        <p>This site does not use analytics or tracking cookies. Our font provider may receive your IP address when a page loads.</p>
+      </section>
+      <section>
+        <h2>Intellectual property</h2>
+        <p>All content on this site, including text, graphics and video, is owned by or licensed to Panacea. You may view it for personal, non-commercial use. Any other use requires our written permission.</p>
+      </section>
+      <section>
+        <h2>Limitation of liability</h2>
+        <p>This site is provided “as is” without warranties of any kind. To the fullest extent permitted by law, Panacea is not liable for any loss arising from use of, or reliance on, this site or any linked third-party site.</p>
+      </section>
+      <section>
+        <h2>Governing law</h2>
+        <p>These terms are governed by the laws of the State of Delaware, United States. Any dispute will be subject to the exclusive jurisdiction of the state and federal courts located in Delaware.</p>
+      </section>
+      <section>
+        <h2>Contact</h2>
+        <p>Questions about these terms can be sent to contact@panaceainternational.com.</p>
+      </section>
+      <p class="legal">© 2026 Panacea Technologies. All rights reserved.</p>
+    </div>
   </div>
 </main>
 
@@ -266,7 +323,7 @@ body.open .panel{transform:none;visibility:visible}
 (function(){
   var body=document.body, btn=document.getElementById('menu-btn'), panel=document.getElementById('panel');
   var views=[].slice.call(document.querySelectorAll('[data-view]'));
-  var links=[].slice.call(panel.querySelectorAll('nav a'));
+  var links=[].slice.call(panel.querySelectorAll('nav a, .foot a'));
   function setOpen(o){
     body.classList.toggle('open',o);
     btn.setAttribute('aria-expanded',o?'true':'false');
